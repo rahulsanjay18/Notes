@@ -1,4 +1,6 @@
 \documentclass{article}
+\usepackage{algpseudocode}
+\usepackage{algorithm}
 \usepackage[english]{babel}
 \usepackage[utf8]{inputenc}
 \usepackage{fancyhdr}
@@ -100,10 +102,26 @@ Stochastic - compute the change in $\beta$ using one data point, updating $\beta
 Mini-Batch - Split your data into small, even groups, and compute the change, and iterate over that.
 
 Batch and Stochastic are pretty slow, so we do mini batch typically
+% Can we make b just part of the matrix
+\begin{algorithm}
+	\caption{Gradient Descent- Mini Batch with MSE}
+	\begin{algorithmic}
+		\Procedure{Step}{$X$, $\beta$, $y$, $b$, $\alpha$}\\
+			 \Comment $X$ the matrix containing loaded input data, $\beta$ the current values of our model's coefficients, $b$ current value of the regression intercept ($\beta_0$), $\alpha$ the step size. 
+			 
+			 $\hat{y} = XW + b$
+			 $error = y - \hat{y}$
+			 
+			 $W += \alpha\times error\times X$ \Comment this is just the derivative (negative is removed)
+			 $b += \alpha * \sum error_i$
+		\EndProcedure
+	\end{algorithmic}
+\end{algorithm}
 
 \section{Generalizing to Higher Dimensions}
 % Absolutely give matrix translations here or else nothing makes any goddamn sense
-% Also pseudocode
+
+For an input vector $\vec{x} = x_1, ..., x_n$, we get an $n-1$ dimensional hyperplane.
 
 \section{Warnings}
 % Just copy whats on the Udacity site basically
