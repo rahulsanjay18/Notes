@@ -1,0 +1,61 @@
+\documentclass{article}
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{fancyhdr}
+\usepackage{listings}
+\usepackage{graphicx}
+\usepackage[section]{placeins}
+\usepackage{titlesec}
+\usepackage[margin=1in]{geometry}
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{Rahul Shah}
+\lhead{Machine Learning Udacity}
+\rfoot{\thepage}
+\title{Supervised Learning: Linear Regression}
+\begin{document}
+\maketitle
+\section{Motivation}
+% Talk about the housing problem and trying to predict the next house in
+\section{Fitting a Line}
+% If we know the thing is linear, then we can use a linear model to predict it
+% make sure you mention the linear model we are using and what the coefficients mean
+\section{Moving a Line Towards a Point}
+% This is how we can approximate a line movement
+\subsection{Absolute Trick}
+\subsection{Square Trick}
+
+% Think of each point pulling towards a line, the farther away the point from the line, the harder it pulls the line towards it
+% Note that if we define error as the difference between our predicted y from our actual point, our best fit line is essentially the placement of the line such that the sum of all errors is at its smallest
+
+% Note on Linear Lease Squares (matrix solution), and how, though it does solve the problem completely, it also involves inverting a matrix, which can be computationally taxing
+% So, we take an iterative approach, (mention the mountain thing, and how, to get to the bottom, you just go where it falls off the most)
+
+\section{Gradient Descent}
+% Gradient is basically just the slope of the moutain at any point around you
+% Mountain -> error function which we need to minimize
+% Define error more precisely, introducing avg error
+% MAE & MSE
+
+\subsection{Types of Gradient Descent}
+% Batch, Stochastic, and Mini-Batch
+% First two are basically terrible
+% give pseudocode for mini-batch
+
+\section{Generalizing to Higher Dimensions}
+% Absolutely give matrix translations here or else nothing makes any goddamn sense
+% Also pseudocode
+
+\section{Warnings}
+% Just copy whats on the Udacity site basically
+
+\section{Polynomial Regression}
+% you can do something similar if you want to fit to a polynomial
+
+\section{Regularization}
+
+\section{Feature Scaling}
+
+\section{External Resources}
+
+\end{document}
