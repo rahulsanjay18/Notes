@@ -6,6 +6,7 @@
 \usepackage{graphicx}
 \usepackage[section]{placeins}
 \usepackage{titlesec}
+\usepackage{amsmath}
 \usepackage[margin=1in]{geometry}
 \pagestyle{fancy}
 \fancyhf{}
@@ -25,19 +26,19 @@ If we assume that increasing square footage is approximately proportional to the
 % If we know the thing is linear, then we can use a linear model to predict it
 For any set of data \emph{assuming the data is approximately linear}, we can use a linear model to predict the output of any new data that comes in. 
 % make sure you mention the linear model we are using and what the coefficients mean
-As a reminder, the linear model we are working with (for now) is:\newline $\hat{y} = w_1x + w_2$\newline where \newline $\hat{y} :=$ Predicted output of the linear model.\newline Note that if we increase $w_1$, we rotate the line CCW, if we decrease $w_1$, we rotate the line CW, and increasing/decreasing $w_2$ pulls up/down the line.
+As a reminder, the linear model we are working with (for now) is:\newline $\hat{y} = \beta_1x + \beta_2$\newline where \newline $\hat{y} :=$ Predicted output of the linear model.\newline Note that if we increase $\beta_1$, we rotate the line CCW, if we decrease $\beta_1$, we rotate the line CW, and increasing/decreasing $\beta_2$ pulls up/down the line.
 \section{Moving a Line Towards a Point}
 % This is how we can approximate a line movement
-Let's assume the line we have to work with is: $y(x) = w_1x + w_2$ ($y(x)$ will be treated as y unless explicitly used as a function), where $w_1, w_2$ are arbitrary constants, like a really bad guess as to what the actual line would be. Place a point reasonably far away from the line, $P = (p, q)$. How do we, using the data that we have, move the line such that it gets closer to the point? 
+Let's assume the line we have to work with is: $y(x) = \beta_1x + \beta_2$ ($y(x)$ will be treated as y unless explicitly used as a function), where $\beta_1, \beta_2$ are arbitrary constants, like a really bad guess as to what the actual line would be. Place a point reasonably far away from the line, $P = (p, q)$. How do we, using the data that we have, move the line such that it gets closer to the point? 
 \subsection{Absolute Trick}
-The Absolute Trick is as such: Every iteration, we change $w_1$ by the value $p$ (the x coordinate), and change the value $w_2$ by the value 1 (we will get to cases where we increase/decrease in a second). So our model transforms to:\\
-$y = w_1x+w_2 \rightarrow y = (w_1 \pm p)x+(w_2 \pm 1)$, where each $\pm$ is independent of one another\\
+The Absolute Trick is as such: Every iteration, we change $\beta_1$ by the value $p$ (the x coordinate), and change the value $\beta_2$ by the value 1 (we will get to cases where we increase/decrease in a second). So our model transforms to:\\
+$y = \beta_1x+\beta_2 \rightarrow y = (\beta_1 \pm p)x+(\beta_2 \pm 1)$, where each $\pm$ is independent of one another\\
 If we continue under the assumption that the point is far away, we might get a good approximation. In all likelihood, however, we are likely to overshoot. So instead we iterate over this multiple times, taking steps towards the right solution. We can do this by multiplying $p$ and 1 by $\alpha$, the learning rate. So our formula becomes:\\
-$y = w_1x+w_2 \rightarrow y = (w_1 \pm p\alpha)x+(w_2 \pm \alpha)$\\
-To determine whether to use + or -, we need to look at how we want the line to move. For $w_1$, we see which direction (CCW or CW) we should rotate the line to reach the point (smallest angle to sweep across so the line meets the point). For $w_2$, do the same thing, but this time your distance is up/down.
+$y = \beta_1x+\beta_2 \rightarrow y = (\beta_1 \pm p\alpha)x+(\beta_2 \pm \alpha)$\\
+To determine whether to use + or -, we need to look at how we want the line to move. For $\beta_1$, we see which direction (CCW or CW) we should rotate the line to reach the point (smallest angle to sweep across so the line meets the point). For $\beta_2$, do the same thing, but this time your distance is up/down.
 \subsection{Square Trick}
-The above trick works to get near to the point, but we never factor in the y distance from the line (other than to determine the sign). What if we adjust $w_1$ and $w_2$ the same way as above, but also account for the vertical distance from the point to the line? We can do this by multiplying our $p\alpha$ and $\alpha$ term by $q-\hat{q}$, where $\hat{q} = y(p)$. So our formula for the square trick becomes:\\
-$y = w_1x+w_2 \rightarrow y = (w_1 + p\alpha(q-\hat{q}))x+(w_2 + \alpha(q-\hat{q}))$\\
+The above trick works to get near to the point, but we never factor in the y distance from the line (other than to determine the sign). What if we adjust $\beta_1$ and $\beta_2$ the same way as above, but also account for the vertical distance from the point to the line? We can do this by multiplying our $p\alpha$ and $\alpha$ term by $q-\hat{q}$, where $\hat{q} = y(p)$. So our formula for the square trick becomes:\\
+$y = \beta_1x+\beta_2 \rightarrow y = (\beta_1 + p\alpha(q-\hat{q}))x+(\beta_2 + \alpha(q-\hat{q}))$\\
 Note that we don't need to use $\pm$ anymore because multiplying by $q-\hat{q}$ means that if our point is below our line, this difference will yield a negative number,  and if the point is above our line, the difference will yield a positive number.
 \subsection{Why not just do $\frac{q}{p}x$ as our line?}
 Obviously these tricks are pretty bad standalone operations, but their power is in the fact that they aren't exact. When we do linear regression, we're modifying our line of best fit so it coincides with all the data, and, unless all of our data points are co-linear (HIGHLY unlikely!), we want our line of best fit to be close to all of our data points. Think of each point pulling towards a line, the farther away the point from the line, the harder it pulls the line towards it.
@@ -49,20 +50,56 @@ Now that we have an iterative approach to pulling a line closer to a point, we n
 \section{Linear Least Squares}
 % Note on Linear Least Squares (matrix solution), and how, though it does solve the problem completely, it also involves inverting a matrix, which can be computationally taxing.
 
-Turns out, finding the exact line of best fit for a set of points $(x_i, y_i)$ is an already solved problem, with a nice, closed form solution.  
+Turns out, finding the exact line of best fit for a set of points $(x_i, y_i)$ is an already solved problem, with a nice, closed form solution. Let our linear model be $\beta_1 x + \beta_0 = y$. If we consider the linear system:\\
+$X\beta = y$\\
+Where:\\
+$X :=$ the overdetermined matrix
+$\begin{bmatrix}
+	1 & x_1\\
+	\vdots & \vdots\\
+	1 & x_n
+\end{bmatrix}$\\
+$y:=$ the vector of y values associated with each x in the data\\
+$\beta :=$ the vector of beta constants in the linear system (from this model, it's $\beta_1$ and $\beta_0$)\\
+We have an overdetermined system that does not have exact solutions for $\beta_1, \beta_0$. Since we need a square matrix were $X$ is, so we can solve it, we can multiply both sides by $X^T$ to get:\\
+$X^TX\beta=X^Ty$\\
+Solving for $\beta$, we get:\\
+$\beta=(X^TX)^{-1}y$, where $\beta$ is guaranteed to be such that our model $\beta_1 x + \beta_0 = y$ minimizes the error.
+
+%NEED TO CHECK THIS THERE IS A WAY BUT I DONT WANT TO DO THIS
+%This can even be generalized, if we have a model $y = \beta_0 + \sum_{1}^{n} beta_if_i(\vec{x})$, where each $f$ is a polynomial, we can make the entries of each row of our matrix the functions $f_i(\vec{x})$, with every row in the matrix being one point from the input data $\vec{x} = x_1, ..., x_n$\\
+
+Unfortunately, this linear least squares approach is rarely used. This is because the formula $\beta=(X^TX)^{-1}y$ means that we need to calculate the inverse of a matrix, which is an $O(n^3)$ operation. 
 
 % So, we take an iterative approach, (mention the mountain thing, and how, to get to the bottom, you just go where it falls off the most)
 
+Since we can't solve this exactly, we need to get an approximation of our answer via iterative methods. 
+
+\section{Error Functions}
+Since our method must be iterative and will not give us the exact answer, it would be useful to have an idea of what our error for any given model is. 
+\subsection{Mean Approximation Error (MAE)}
+MAE $=\frac{1}{m}\sum |y_i - \hat{y}(x_i)$\\
+We use absolute value so we do not have negative differences accidentally canceling positive ones. It's also a metric.
+\subsection{Mean Squared Error (MSE)}
+MSE $=\frac{1}{2m}\sum (y_i - \hat{y}(x_i))^2$\\
+The added $\frac{1}{2} is a constant added for convienience.$
+
 \section{Gradient Descent}
 % Gradient is basically just the slope of the moutain at any point around you
-% Mountain -> error function which we need to minimize
-% Define error more precisely, introducing avg error
-% MAE & MSE
+Since our goal is to minimize error, why not just change $\beta_0, \beta_1$ in the direction of the greatest decrease of the error function, multiplied by a small number (so we don't overshoot)? That is, every iteration,\\
+$\beta_i = \beta_i - \alpha\frac{\partial}{\partial \beta_i} Error = \beta_i - \alpha\frac{\partial Error}{\partial y_i}\frac{\partial y_i}{\partial x_i}$\\
+If we apply this to our MAE and MSE square functions, we essentially get the Absolute and Square Trick, respectively
+
 
 \subsection{Types of Gradient Descent}
 % Batch, Stochastic, and Mini-Batch
 % First two are basically terrible
 % give pseudocode for mini-batch
+Batch - compute the average change in $\beta$ using all data points, update $\beta$, and iterate over that
+Stochastic - compute the change in $\beta$ using one data point, updating $\beta$, then do another, etc.
+Mini-Batch - Split your data into small, even groups, and compute the change, and iterate over that.
+
+Batch and Stochastic are pretty slow, so we do mini batch typically
 
 \section{Generalizing to Higher Dimensions}
 % Absolutely give matrix translations here or else nothing makes any goddamn sense
