@@ -130,7 +130,7 @@ For an input vector $\vec{x} = x_1, ..., x_n$, we get an $n-1$ dimensional hyper
 Basically, you can fit your model to any polynomial, so long as you treat each power of each input variable as another term on your x vector. Meaning, to model a quadratic,, you need rows of length 3 (const, power 1, power 2)
 
 \section{Regularization}
-Natrually we can fit multple models to the same set of data. We can also minimize error by just doing linear least squares to a polynomial of an arbitrarily high power, but this makes an extremely computationally complex problem to solve. We also end up with a model that does not generalize to new data. To account for that, we regularize the model by summing up the elements in $\beta$ and tacking that onto our total error. Models that do not generalize well will have a much larger regularization parameter. 
+Naturally we can fit multiple models to the same set of data. We can also minimize error by just doing linear least squares to a polynomial of an arbitrarily high power, but this makes an extremely computationally complex problem to solve. We also end up with a model that does not generalize to new data. To account for that, we regularize the model by summing up the elements in $\beta$ and tacking that onto our total error. Models that do not generalize well will have a much larger regularization parameter. 
 
 Sometimes, we want our model to be more accurate (less actual error) and are okay if the model is complex, so we multiply this regularization parameter by $\lambda$ to lower the error "punishment". If we can tolerate higher errors & need simplicity (perhaps operating on a lot of data), we use a higher $\lambda$ on our regularization parameter. \\
 
