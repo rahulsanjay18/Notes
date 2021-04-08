@@ -127,12 +127,18 @@ For an input vector $\vec{x} = x_1, ..., x_n$, we get an $n-1$ dimensional hyper
 % Just copy whats on the Udacity site basically
 
 \section{Polynomial Regression}
-% you can do something similar if you want to fit to a polynomial
+Basically, you can fit your model to any polynomial, so long as you treat each power of each input variable as another term on your x vector. Meaning, to model a quadratic,, you need rows of length 3 (const, power 1, power 2)
 
 \section{Regularization}
+Natrually we can fit multple models to the same set of data. We can also minimize error by just doing linear least squares to a polynomial of an arbitrarily high power, but this makes an extremely computationally complex problem to solve. We also end up with a model that does not generalize to new data. To account for that, we regularize the model by summing up the elements in $\beta$ and tacking that onto our total error. Models that do not generalize well will have a much larger regularization parameter. 
 
+Sometimes, we want our model to be more accurate (less actual error) and are okay if the model is complex, so we multiply this regularization parameter by $\lambda$ to lower the error "punishment". If we can tolerate higher errors & need simplicity (perhaps operating on a lot of data), we use a higher $\lambda$ on our regularization parameter. \\
+
+2 kinds of regularization:\\
+L1: take the L1 distance of the coefficients\\
+L2:    "     L2             "
 \section{Feature Scaling}
-
+When we implement regularization or are using a distance based metric, we need to scale the range of our input vector values so that the penalty for error is uniform, and you reach convergence faster. Essentially what you want to do is to make each feature (each $x_i$ for each piece of data) and make it so its mean is 0 and standard deviation is 1. You can also just normalize the data from 0 to 1 or standardize the values such that each value is a z-score
 \section{External Resources}
-
+%no later i hate this
 \end{document}
