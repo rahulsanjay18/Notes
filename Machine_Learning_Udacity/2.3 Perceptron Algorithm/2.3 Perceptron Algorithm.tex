@@ -1,0 +1,57 @@
+\documentclass{article}
+\usepackage{algpseudocode}
+\usepackage{algorithm}
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{fancyhdr}
+\usepackage{listings}
+\usepackage{graphicx}
+\usepackage[section]{placeins}
+\usepackage{titlesec}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage[margin=1in]{geometry}
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{Rahul Shah}
+\lhead{Machine Learning: Nanodegree}
+\rfoot{\thepage}
+\title{Supervised Learning: Linear Regression}
+\begin{document}
+\maketitle
+\section{Motivation}
+A college's acceptances are a yes/no decision. The factors the college considers are:\\
+$x_1:=$ test score / 10\\
+$x_2:=$ grades / 10\\
+
+Can we predict whether a new $(x_1, x_2)$ gets accepted or rejected?
+
+\section{Classification Problem}
+This is a classification problem, so our goal is not to fit a function to the data, but instead fit a function such that it splits the data into discrete, already defined categories. In the case of the college problem, we plot the points on an $x_1$ vs $x_2$ plot, and come up with the equation of a line $f(x_1.x_2) = \beta_2 x_2 + \beta_1 x_1 + \beta_0$ that splits the data in half. Then, for any given $(x_1,x_2)$, our prediction equation is: \\
+$\hat{y} = 
+\begin{cases} 
+0 & f(x_1, x_2) \le 0 \\
+1 & f(x_1, x_2) > 0 
+\end{cases}
+$\\
+Generally, if each point on our plot has n coordinates, our dividers are going to be n-planes, or an n-1 subspace of $\mathbb{R}^n$, and our $f(x_1, x_2) = \beta^T X + \beta_0$, where both $\beta$ and $X$ are column vectors containing the respective elements.
+\section{Perceptron}
+%This is best done with a picture
+
+\subsection{Another Way}
+% again, picture
+\subsection{Logical Operators}
+Basically, if we plot points at $(0, 0), (0, 1), (1, 0), (1, 1)$, we need to come up with a dividing line or whatever such that all points above it, when plugged in, return true, and all other points return false. Try plugging in these points into equations of the form $f(x_1.x_2) = \beta_2 x_2 + \beta_1 x_1 + \beta_0$ that follow the rules listed for each logical operator and compare the output with the logical operator it's supposed to represent:\\
+AND: $\beta_0 < 0, \beta_1 + \beta_0 < 0, \beta_2 + \beta_0 < 0, \beta_2 + \beta_1 + \beta_0 > 0$ \\
+OR: $\beta_0 < 0, \beta_1 + \beta_0 > 0, \beta_2 + \beta_0 > 0, \beta_2 + \beta_1 + \beta_0 > 0$ \\
+NOT: $\beta_0 > 0, \beta_1 + \beta_0 < 0$
+
+You can compose the rest of these with one another to get other functions.
+
+\section{Finding the Constant Terms}
+
+\subsection{Perceptron Trick}
+
+\subsection{Algorithm}
+
+\end{document}
