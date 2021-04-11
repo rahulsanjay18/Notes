@@ -34,7 +34,7 @@ $\hat{y} =
 1 & f(x_1, x_2) > 0 
 \end{cases}
 $\\
-Generally, if each point on our plot has n coordinates, our dividers are going to be n-planes, or an n-1 subspace of $\mathbb{R}^n$, and our $f(x_1, x_2) = \beta^T X + \beta_0$, where both $\beta$ and $X$ are column vectors containing the respective elements.
+Generally, if each point on our plot has n coordinates, our dividers are going to be n-planes, or an n-1 subspace of $\mathbb{R}^n$, and our $f(x_1, x_2) = \beta^T X + \beta_0$, where both $\beta$ and $X$ are column vectors containing the respective elements. Just like linear regression, we can also bend our plane in polynomial shapes by adding new terms of the form $x_{i}^n$
 \section{Perceptron}
 %This is best done with a picture
 
@@ -49,9 +49,56 @@ NOT: $\beta_0 > 0, \beta_1 + \beta_0 < 0$
 You can compose the rest of these with one another to get other functions.
 
 \section{Finding the Constant Terms}
-
+Now that you know both the 2 variable and the general case of this algorithm, we can use what we've learned so far to figure out what the constant terms $\beta$ are (ya know, the whole point of this algorithm).
 \subsection{Perceptron Trick}
+\subsubsection{Intuition}
+For any misclassified point, we want to move the line closer to the misclassified points, because the line is the border between our classification 1 or 0, so crossing that line equates to changing the predicted value. Kind of like how we do the absolute trick, where we want the line to move to a place where it approximately fits with the data, we want to do a similar thing here. But here our line (or hyperplane) acts as a border between points, not as a representation of the data. So, we want the "broad side" of the line to move towards the points that are misclassified, so we flip all our $\pm$ signs to $\mp$ signs. 
+% THIS IS A BAD EXPLANATION FOR THIS, i dont think it hits the exact reason why we do what we're doing this. Why, here, do we apply the + and -s simultaneously here but not for the absolute trick? This probably requires playing around with numbers.
+\subsubsection{Equation}
+So for each misclassified point,\\
+$f(\beta, \alpha, X, P) = (\beta - \alpha P)^TX$\\
+Where:\\
+$\beta :=$ Constants in vector form, including $\beta_0$\\
+$\alpha :=$ learn rate\\
+$X :=$ the data input (appended with a 1 for the constant term $\beta_0$)\\
+$P :=$ the point that is misclassified $(p_1, p_2, ...)$\\
 
 \subsection{Algorithm}
+In general, the steps are as follows:
+
+\begin{itemize}
+	\item Start with random weights
+	\item figure out what points are misclassified (apply current linear eqn to the dataset and see if each corresponding data point matched with the actual data point's classification)
+	\item For each point that is misclassified, change weights by the value of their corresponding x multiplied by the learn rate
+\end{itemize}
+
+\begin{algorithm}
+	\caption{Perceptron Algorithm}
+	\begin{algorithmic}
+		\Procedure{Step}{$X$, $\beta$, $y$, $\alpha$}\\
+		\Comment $X$ the data input, $\beta$ the coefficients to the linear eqn, $y$ the actual result values of the predictor output, $\alpha$ is the learning rate
+		
+		\State $\hat{y} = \beta^TX$
+		
+		\For { each point in (X, y)}\\\\
+		\Comment Remember, when we read in the data, it's read in as ($<$input$>$, $<$output$>$), where $X = $ input (n col matrix) and $y = $ output (vector)\\
+		
+		\If {$\hat{y} == 0$ and the corresponding y is different}:
+			\State $\beta += \alpha X$
+		\EndIf\\
+		
+		\If {$\hat{y} == 1$ and the corresponding y is different}:
+			\State $\beta -= \alpha X$
+		\EndIf\\
+		
+		\EndFor
+		
+		
+		
+		\EndProcedure
+	\end{algorithmic}
+\end{algorithm}
+
+
 
 \end{document}
