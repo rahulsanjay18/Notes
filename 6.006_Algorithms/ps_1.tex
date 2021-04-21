@@ -43,5 +43,17 @@
             \item incorrect. at the bottom of the function, we can see that it constricts the new iteration to the smaller subproblem (one quadrant of the previous problem), which does not take into account the fact that a peak might be on a different, adjacent quadrant. It needs to check at every iteration if the best seen value is the greatest value
             \item correct, same as number 3 but this time we take turns splitting between rows and columns, and when we get our max on the dividing line, we compare it to our best seen cooridinates to confirm if we have a peak
         \end{enumerate}
+    \section{1-4}
+        \begin{enumerate}
+            \item $nlog(n)$
+            \item $n^2$
+            \item $n$
+            \item $n$
+        \end{enumerate}
+    \section{1-5} % This is a terrible proof. I forgot how to write proofs
+        for algorithm 2, we basically find the highest number each iteration and follow that up to the peak, like climbing a mountain. For each point (x, y), either it is a peak, or there exists some (x', y') that is of greater value than that. make that our new (x, y). Now when we check, we know one neighbor that is definetly not a peak, If we keep going without finding a peak, we will eventually hit one of the borders of the array and after that it's basically just a 1d peak finding
+        problem\\
 
+        For this one, we alternate looking at the middle row or column, and try to find the 1d peak. Then we check either side to see if that is a peak. If not, we can eliminate that row and everything on the other side as a peak. Then we only focus on the subproblem which is half of the original, and look at the middle column or row, whichever we did not look at the last time. This time, when we find the peak, we compare that peak to the previously seen value (from the last iteration).
+        This guarantees we will find a peak. 
 \end{document}
