@@ -1,0 +1,26 @@
+\documentclass{article}
+\usepackage{algpseudocode}
+\usepackage{algorithm}
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{fancyhdr}
+\usepackage{listings}
+\usepackage{graphicx}
+\usepackage[section]{placeins}
+\usepackage{titlesec}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{hyperref}
+\usepackage[margin=1in]{geometry}
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{Rahul Shah}
+\lhead{6.006 Introduction to Algorithms}
+\rfoot{\thepage}
+\title{Lecture 2: Document Distance}
+\begin{document}
+    \section{Problem Definition}
+        Define a document as a sequence of words (alphanumeric characters), removing all the punctuation and stuff from it all. If we have two such documents, how similar are they (how many words do they have overlapping)?
+    \section{Solution}
+        Since we don't care about the order of the words in each document $D$, we can think of each document as a vector, with $D(w)$ being the number of occurences of the word $w$ in $D$.
+\end{document}
