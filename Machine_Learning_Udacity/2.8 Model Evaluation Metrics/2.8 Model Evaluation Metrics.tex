@@ -1,0 +1,53 @@
+\documentclass{article}
+\usepackage{algpseudocode}
+\usepackage{algorithm}
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{fancyhdr}
+\usepackage{listings}
+\usepackage{graphicx}
+\usepackage[section]{placeins}
+\usepackage{titlesec}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage[margin=1in]{geometry}
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{Rahul Shah}
+\lhead{Machine Learning: Nanodegree}
+\rfoot{\thepage}
+\title{2.8 Model Evaluation Metrics}
+\begin{document}
+\maketitle
+\section{Motivation}
+How do we evaluate models? What metrics do we use?
+\section{Dealing with Training Data}
+We need to make sure our models are not overfitting, so we need to take our training data and split it into training data and testing data. Training data will be used to actually train the model, and the test data will be used to verify that the model is accurate. We can tell if the model is accurate if the test data's margin of error and the training data's margin of error are the same. Typically we split 75:25 or 80:20 training:testing.
+\section{Confusion matrix}
+When evaluatiing effectiveness of a classification algorithm, we can put results in a table.\\
+\begin{table}[]
+\begin{tabular}{cccc}
+ & Guessed Class 1  & ... & Guessed Class N \\
+Actual Class 1 &  &  &  \\
+... &  &  &  \\
+Actual Class N &  &  & 
+\end{tabular}
+\end{table}
+\\
+
+Basically we use this to evaluate Type I (False Positive) and Type II (False Negative) error. We measure accurracy via a standard average:\\
+$\frac{\Sigma True guesses}{Total}$\\
+
+Depending on your problem, you want to punish false positives or false negatives more, and we can use the following measurements to see what proportion of positive classifications are Type 1 or Type 2 errors:\\
+Recall: False positives are fine, false negatives are not: $\frac{True(+)}{True(+) + False(-)}$ (Ex. This metric is useful when testing if someone has a virus that is particularly contagious)
+Precision: False negatives are fine, false positives are not: $\frac{True(+}{True(+) + False(+)$ (Ex. This metric is useful when classifying spam emails)\\
+\section{The F-beta score}
+To put these two measurements together to a single measurement, we use the f-beta score, which tells us a sort of weighted average between the two.\\
+$F_{\beta} = (1 + \beta^2)\frac{P * R}{\beta^2 * P + R}$
+\\
+We choose beta closer to zero when we want to emphasize precision, and we choose beta closer to infinity when we want to emphasize recall, with the middle point being 1. We don't use arithmetic mean because if we have zero for one of the metrics and one hundred for another one of the metrics, the arithmetic mean becomes half, which is inaccurate. We want a low precision or recall to make the entire score low, because ultimately, we want both precision and recall to be high.
+
+\section{Preventing Over/Underfitting}
+We want to make sure that our test set is truly for testing accuracy, not for seeing if we overfit or underfit. So, we split the data into yet another portion, cross validation, which % do this later
+
+\end{document}
