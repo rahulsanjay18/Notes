@@ -1,0 +1,37 @@
+\documentclass{article}
+\usepackage{algpseudocode}
+\usepackage{algorithm}
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{fancyhdr}
+\usepackage{listings}
+\usepackage{graphicx}
+\usepackage[section]{placeins}
+\usepackage{titlesec}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage[margin=1in]{geometry}
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{Rahul Shah}
+\lhead{Machine Learning: Nanodegree}
+\rfoot{\thepage}
+\title{3.1 Introduction to Neural Networks}
+\begin{document}
+\maketitle
+\section{What is a Neural Network?}
+Neural Networks vaguely mimic how a brain works. The structure is essentially
+like a perceptron. 
+% Put a diagram of a perceptron here
+This is just another way of looking at a linear model, with inputs $x_1, x_2,
+x_3, \dots, x_n$ and output $f(\vec{x}, \vec{w}) = w_1x_1 + \dots + w_nx_n
+= w \dot x$. 
+
+A neural network is essentially layers upon layers of these models, % put picture here
+where each edge in the graph represents a weight to multiply the input with. We
+have layers upon layers of these nodes, essentially mapping the last layer's
+output to another layer.
+
+\section{Error Functions}
+
+\end{document}
