@@ -1,4 +1,5 @@
 *.aux
 *.log
 *.synctex.gz
+*.pdf
 6.006_Algorithms/ps/*
