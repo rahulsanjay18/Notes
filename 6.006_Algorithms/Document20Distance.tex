@@ -1,0 +1,251 @@
+% This file was converted to LaTeX by Writer2LaTeX ver. 1.6.1
+% see http://writer2latex.sourceforge.net for more info
+\documentclass[letterpaper]{article}
+\usepackage[latin1]{inputenc}
+\usepackage{amsmath}
+\usepackage{amssymb,amsfonts,textcomp}
+\usepackage[T1]{fontenc}
+\usepackage[english]{babel}
+\usepackage{color}
+\usepackage{array}
+\usepackage{hhline}
+\usepackage{hyperref}
+\hypersetup{colorlinks=true, linkcolor=blue, citecolor=blue, filecolor=blue, urlcolor=blue}
+% Outline numbering
+\setcounter{secnumdepth}{0}
+% Page layout (geometry)
+\setlength\voffset{-1in}
+\setlength\hoffset{-1in}
+\setlength\topmargin{0.7874in}
+\setlength\oddsidemargin{0.7874in}
+\setlength\textheight{9.4251995in}
+\setlength\textwidth{6.9251995in}
+\setlength\footskip{0.0cm}
+\setlength\headheight{0cm}
+\setlength\headsep{0cm}
+% Footnote rule
+\setlength{\skip\footins}{0.0469in}
+\renewcommand\footnoterule{\vspace*{-0.0071in}\setlength\leftskip{0pt}\setlength\rightskip{0pt plus 1fil}\noindent\textcolor{black}{\rule{0.25\columnwidth}{0.0071in}}\vspace*{0.0398in}}
+% Pages styles
+\makeatletter
+\newcommand\ps@Standard{
+  \renewcommand\@oddhead{}
+  \renewcommand\@evenhead{}
+  \renewcommand\@oddfoot{}
+  \renewcommand\@evenfoot{}
+  \renewcommand\thepage{\arabic{page}}
+}
+\makeatother
+\pagestyle{Standard}
+\title{}
+\author{}
+\date{2021-06-01}
+\begin{document}
+{\centering\sffamily\bfseries
+Document Distance
+\par}
+
+\section{Problem Definition}
+Define a document as a sequence of words (alphanumeric characters), removing all the punctuation and stuff from it all.
+If we have two such documents, how similar are they (how many words do they have overlapping)?
+
+\section{Solution}
+Since we don't care about the order of the words in each document  $D$, we can think of each document as a vector, with 
+$D(w)$ \ being the number of occurrences of the word  $w$ \ in  $D$. We can then define distance as:
+
+\begin{equation*}
+d'(D_{1,}D_2)=D_1\cdot D_2=\sum _WD_1[W]\cdot D_2[W]
+\end{equation*}
+This does work as an okay start, but it does not scale well. This formula really counts the number of words we have in
+common, so despite two large documents having a high percentage of words in common, this formula would yield a very
+high value, because a small percentage of a large document is still a lot of words. So, we need to clamp this to a
+fixed range using an alternate definition of the dot product,  $D_1\cdot D_2=|D_1||D_2|\cos (\theta )$. Defining:
+
+\begin{equation*}
+d''(D_{1,}D_2)=\frac{d'(D_{1,}D_2)}{|D_1|\cdot |D_2|}
+\end{equation*}
+We can see that for  $\theta \in [0,\frac{\pi } 2]$
+
+ $\theta =\cos ^{-1}\left(\frac{d'(D_{1,}D_2)}{|D_1|\cdot |D_2|}\right)$, thus clamping it to a value. If  $\theta $ is
+zero, both documents are exactly the same, and at the other end of the range, we have fully different documents.
+
+\clearpage
+\bigskip
+
+\section{Algorithm}
+\texttt{Document Distance:}
+
+{\ttfamily
+/* }
+
+{\ttfamily
+\ * 1. Split each document into words}
+
+{\ttfamily
+\ * 2. Count word frequencies (document vectors)}
+
+{\ttfamily
+\ * 3. Compute dot product}
+
+{\ttfamily
+\ */ }
+
+
+\bigskip
+
+{\ttfamily
+def document\_distance(doc1, doc2):}
+
+{\ttfamily
+\ \ list1 = get\_list\_of\_words(doc1)}
+
+{\ttfamily
+\ \ list2 = get\_list\_of\_words(doc2)}
+
+
+\bigskip
+
+{\ttfamily
+\ \ d1 = count\_frequencies(list1)}
+
+{\ttfamily
+\ \ d2 = count\_frequencies(list2)}
+
+
+\bigskip
+
+{\ttfamily
+\ \ sum = \textrm{dot\_product(d1, d2)}}
+
+
+\bigskip
+
+{\ttfamily
+\textrm{\ \ normalized = sum / (len(list1) * len(list2))}}
+
+
+\bigskip
+
+{\ttfamily
+\textrm{\ \ return normalized }}
+
+
+\bigskip
+
+{\ttfamily
+def get\_list\_of\_words(doc):}
+
+{\ttfamily
+\ \ start = 0}
+
+{\ttfamily
+\ \ end = 1}
+
+{\ttfamily
+\ \ A = ord(`A')}
+
+{\ttfamily
+\ \ Z = ord(`Z')}
+
+{\ttfamily
+\ \ a = ord(`a')}
+
+{\ttfamily
+\ \ z = ord(`z')}
+
+{\ttfamily
+\ \ zero = ord(`0')}
+
+{\ttfamily
+\ \ nine = ord(`9')}
+
+{\ttfamily
+\ \ space = ` `}
+
+{\ttfamily
+\ \ word\_list = []}
+
+
+\bigskip
+
+{\ttfamily
+\ \ for c in doc:}
+
+{\ttfamily
+\ \ \ \ val = ord(c)}
+
+{\ttfamily
+\ \ \ \ if A {\textless} val {\textless} Z or a {\textless} val {\textless} z or zero {\textless} val {\textless} nine:}
+
+{\ttfamily
+\ \ \ \ \ \ end += 1}
+
+{\ttfamily
+\ \ \ \ elif val == space:}
+
+{\ttfamily
+\ \ \ \ \ \ word\_list.append(doc[start:end])}
+
+{\ttfamily
+\ \ \ \ \ \ start = end}
+
+{\ttfamily
+\ \ \ \ \ \ end += 1}
+
+{\ttfamily
+\ \ return word\_list}
+
+
+\bigskip
+
+{\ttfamily
+def count\_frequencies(word\_list):}
+
+{\ttfamily
+\ \ count = \{\}}
+
+
+\bigskip
+
+{\ttfamily
+\ \ for word in word\_list:}
+
+{\ttfamily
+\ \ \ \ if word in count:}
+
+{\ttfamily
+\ \ \ \ \ \ count[word] += 1}
+
+{\ttfamily
+\ \ \ \ else:}
+
+{\ttfamily
+\ \ \ \ \ \ count[word] = 1}
+
+
+\bigskip
+
+{\ttfamily
+\ \ return count}
+
+
+\bigskip
+
+def dot\_product(d1, d2):
+
+\ \ sum = 0
+
+\ \ for key in d1:
+
+\ \ \ \ if key in d2:
+
+\ \ \ \ \ \ sum += d1[key] * d2[key]
+
+
+\bigskip
+
+\ \ return sum
+
+
+\bigskip
+\end{document}
